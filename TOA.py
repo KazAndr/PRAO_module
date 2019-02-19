@@ -232,7 +232,7 @@ def toa_center_mass(head, main_pulse, pattern, zone):
     """
     # определяем границы среднего профиля
     l_edg, r_edg = edgesOprofile(main_pulse, pattern)
-    phase = l_edg + ndimage.measurements.center_of_mass(main_profile[l_edg:r_edg])
+    phase = l_edg + ndimage.measurements.center_of_mass(main_pulse[l_edg:r_edg])
     """
     Определение погрешности
     """
