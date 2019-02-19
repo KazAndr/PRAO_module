@@ -228,11 +228,10 @@ def max_str_pls_toa(head, main_pulse, data_pulses, pattern, zone):
 def toa_center_mass(head, main_pulse, pattern, zone):
     """
     Defenition TOA by center mass of average profile.
-    Return TOA as MJD and error in millisecond. 
+    Return TOA as MJD and error in millisecond, TOA as point. 
     """
     # определяем границы среднего профиля
     l_edg, r_edg = edgesOprofile(main_pulse, pattern)
-    
     phase = l_edg + ndimage.measurements.center_of_mass(main_profile[l_edg:r_edg])
     """
     Определение погрешности
@@ -255,7 +254,7 @@ def toa_center_mass(head, main_pulse, pattern, zone):
     t = t - int(zone)*u.hour #Перевод местного времени в UTC.
     t = t + phase * float(head['tay'])*u.millisecond
     
-    return t.mjd, error.value
+    return t.mjd, error.value, phase
 
 
 # In[9]:
