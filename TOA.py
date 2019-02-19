@@ -8,6 +8,7 @@ import numpy as np
 
 from astropy.time import Time
 from astropy import units as u
+from scipy import ndimage
 from scipy.interpolate import InterpolatedUnivariateSpline
 
 from PRAO import *
@@ -185,11 +186,11 @@ def max_corr_spls_toa(head, main_pulse, pattern, zone):
 def max_str_pls_toa(head, main_pulse, data_pulses, pattern, zone):
     """
     Defenition TOA by maximum of strongest pulse.
-    Return TOA as MJD and error in millisecond. 
+    Return TOA as MJD and error in millisecond, strong pulse ind index of strong pulse. 
     """
     # определяем границы среднего профиля
     l_edg, r_edg = edgesOprofile(main_pulse, pattern)
-     # Определяем сильнейший импульс в записи
+    # Определяем сильнейший импульс в записи
     pls = [float('-inf')]
     idx = None
     for i, pulse in enumerate(data_pulses):
@@ -219,6 +220,42 @@ def max_str_pls_toa(head, main_pulse, data_pulses, pattern, zone):
     t = t + idx*(float(head['period'])*u.second) + (np.argmax(pls)) * float(head['tay'])*u.millisecond
     
     return t.mjd, error.value, pls, idx 
+
+
+# In[ ]:
+
+
+def toa_center_mass(head, main_pulse, pattern, zone):
+    """
+    Defenition TOA by center mass of average profile.
+    Return TOA as MJD and error in millisecond. 
+    """
+    # определяем границы среднего профиля
+    l_edg, r_edg = edgesOprofile(main_pulse, pattern)
+    
+    phase = l_edg + ndimage.measurements.center_of_mass(main_profile[l_edg:r_edg])
+    """
+    Определение погрешности
+    """
+    snr = SNR(main_pulse, l_edg, r_edg)
+    wight10, l, r = width_of_pulse(main_pulse, 0.1)
+            
+    error = 0.3*np.sqrt((wight10 - 1)*(float(head['tay'])*u.millisecond)**2)/snr
+    error = error.to(u.microsecond)
+    error = error.round(1)
+    """
+    Окончание определения погрешности
+    """
+    day, month, year = head['date'].split('.')
+    hour, minute, second = head['time'].split(':')
+    isot_time = (year + '-' + month + '-' + day + 'T' +
+                 hour + ':' + minute + ':' + second 
+                ) 
+    t = Time(isot_time, format='isot', scale='utc', precision=7)
+    t = t - int(zone)*u.hour #Перевод местного времени в UTC.
+    t = t + phase * float(head['tay'])*u.millisecond
+    
+    return t.mjd, error.value
 
 
 # In[9]:
