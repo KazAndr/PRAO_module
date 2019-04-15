@@ -412,20 +412,15 @@ def quality_data(profile, l_edge, r_edge):
         return False
 
 
-# In[2]:
+# In[ ]:
 
 
-data = [[1, 2, 3], [4, 5, 6], []]
-
-
-# In[4]:
-
-
-data.remove([])
+def my_chi(profile, pattern):
+    return sum([abs(pat - prof) for pat, prof in zip(pattern, profile)])
 
 
 # In[5]:
 
 
-data
+
 
