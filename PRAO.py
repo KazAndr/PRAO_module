@@ -14,6 +14,40 @@ from scipy.interpolate import InterpolatedUnivariateSpline
 
 
 def read_prf(filename):
+    """
+    Help on function read_prf in module PRAO:
+    
+    read_prf(filename):
+        return header, main_pulse, background
+    
+    Discription
+    ----------
+    The function reads a file "filename" in format *.prf.
+    The function gets a name of file or path to file as input data
+    and return header information, average profile of pulsar and 
+    median value of noise.
+    
+    Parameters
+    ----------
+    filename : str
+        Input data. Name of file in current directory or path to file.
+    
+    Returns
+    -------
+    header : dict
+            Dictionary with header information, such as name of pulsar,
+            resolution, numbers of points in the observation, 
+            time of start of the observation and other.
+    main_pulse : ndarray
+            Array of intensities by time which is an average profile of pulsar.
+    background : float
+            Median value of noise.
+    
+    Examples
+    --------
+    It will be add in future.
+    """
+    
     with open(filename, 'r') as file:
         header = {}
         for i in range(12):
@@ -34,7 +68,39 @@ def read_prf(filename):
 
 def read_dat(filename):
     """
-    Return header, main pulse, frequency response and background from file "filename".
+    Help on function read_dat in module PRAO:
+    
+    read_dat(filename):
+        return header, main_pulse, fr, background
+    
+    Discription
+    ----------
+    The function reads a file "filename" in format *.dat.
+    The function gets a name of file or path to file as input data
+    and return header information, average profile of pulsar, frequency response
+    and median value of noise.
+    
+    Parameters
+    ----------
+    filename : str
+        Input data. Name of file in current directory or path to file.
+    
+    Returns
+    -------
+    header : dict
+            Dictionary with header information, such as name of pulsar,
+            resolution, numbers of points in the observation, 
+            time of start of the observation and other.
+    main_pulse : ndarray
+            Array of intensities by time which is an average profile of pulsar.
+    fr : list
+            Frequency response of the observation.
+    background : float
+            Median value of noise.
+    
+    Examples
+    --------
+    It will be add in future.
     """
         
     with open(filename, 'r') as file:
@@ -69,7 +135,40 @@ def read_dat(filename):
 
 def read_srez(filename):
     """
-    Return header, main pulse and background from file "filename".
+    Help on function read_srez in module PRAO:
+    
+    read_srez(filename):
+        return header, main_pulse, background
+    
+    Discription
+    ----------
+    The function reads a file "filename" in format *.srez.
+    Files in format *.srez are output files from PulseViewer program 
+    and are records of dedispersed average pulse of pulsar observed at 111 MHz
+    (bandwight - 2.5 MHz).
+    The function gets a name of file or path to file as input data
+    and return header information, average profile of pulsar
+    and median value of noise.
+    
+    Parameters
+    ----------
+    filename : str
+        Input data. Name of file in current directory or path to file.
+    
+    Returns
+    -------
+    header : dict
+            Dictionary with header information, such as name of pulsar,
+            resolution, numbers of points in the observation, 
+            time of start of the observation and other.
+    main_pulse : ndarray
+            Array of intensities by time which is an average profile of pulsar.
+    background : float
+            Median value of noise.
+    
+    Examples
+    --------
+    It will be add in future.
     """
         
     with open(filename, 'r') as file:
@@ -96,8 +195,42 @@ def read_srez(filename):
 
 def read_profiles(filename):
     """
-    read_profiles(filename)
-    Return header, main pulse, array of pulses and background from file "filename".
+    Help on function read_profiles in module PRAO:
+    
+    read_profiles(filename):
+        return header, main_pulse, data_pulses, background
+    
+    Discription
+    ----------
+    The function reads a file "filename" in format *_profiles.txt.
+    Files in format *_profiles.txt are output files from PulseViewer program
+    and are records of sequence of dedispersed individual pulses of pulsar
+    observed at 111 MHz (bandwight - 2.5 MHz).
+    The function gets a name of file or path to file as input data
+    and return header information, average profile of pulsar, 
+    array of individual pulses and array of values of madian noise for each pulse.
+    
+    Parameters
+    ----------
+    filename : str
+        Input data. Name of file in current directory or path to file.
+    
+    Returns
+    -------
+    header : dict
+            Dictionary with header information, such as name of pulsar,
+            resolution, numbers of points in the observation, 
+            time of start of the observation and other.
+    main_pulse : ndarray
+            Array of intensities by time which is an average profile of pulsar.
+    data_pulses : ndarray
+            Array of individual pulses.
+    background : list
+            List of vedian value of noise for each individual pulse.
+    
+    Examples
+    --------
+    It will be add in future.
     """
     
     with open(filename, 'r') as file:
@@ -137,9 +270,43 @@ def read_profiles(filename):
 
 def read_profiles_MD(filename):
     """
-    read_profiles_MD(filename)
-    Return header, main pulse, array of pulses and background from file "filename".
-    Modifited program for reading date from PulseViewer with active option "Использовать МД"
+    Help on function read_profiles_MD in module PRAO:
+    
+    read_profiles_MD(filename):
+        return header, main_pulse, data_pulses, background
+    
+    Discription
+    ----------
+    The function reads a file "filename" in format *_profiles.txt.
+    Files in format *_profiles.txt are output files from PulseViewer program
+    and are records of sequence of dedispersed individual pulses of pulsar
+    observed at 111 MHz (bandwight - 2.5 MHz). This function is used for processing
+    files produced by "Использовать МД" mode. 
+    The function gets a name of file or path to file as input data
+    and return header information, average profile of pulsar, 
+    array of individual pulses and array of values of madian noise for each pulse.
+    
+    Parameters
+    ----------
+    filename : str
+        Input data. Name of file in current directory or path to file.
+    
+    Returns
+    -------
+    header : dict
+            Dictionary with header information, such as name of pulsar,
+            resolution, numbers of points in the observation, 
+            time of start of the observation and other.
+    main_pulse : ndarray
+            Array of intensities by time which is an average profile of pulsar.
+    data_pulses : ndarray
+            Array of individual pulses.
+    background : list
+            List of vedian value of noise for each individual pulse.
+    
+    Examples
+    --------
+    It will be add in future.
     """
     
     with open(filename, 'r') as file:
@@ -179,9 +346,43 @@ def read_profiles_MD(filename):
 
 def read_profiles_w_skip(filename):
     """
-    read_profiles_w_skip(filename)
-    Return header, main pulse, array of pulses and background from file "filename".
-    Modifited program for reading date from PulseViewer if some pulses were skiped
+    Help on function read_profiles_MD in module PRAO:
+    
+    read_profiles_MD(filename):
+        return header, main_pulse, data_pulses, background
+    
+    Discription
+    ----------
+    The function reads a file "filename" in format *_profiles.txt.
+    Files in format *_profiles.txt are output files from PulseViewer program
+    and are records of sequence of dedispersed individual pulses of pulsar
+    observed at 111 MHz (bandwight - 2.5 MHz). This function is used for processing
+    files if some pulses were sckiped during processing (a short record, noise cleansing). 
+    The function gets a name of file or path to file as input data
+    and return header information, average profile of pulsar, 
+    array of individual pulses and array of values of madian noise for each pulse.
+    
+    Parameters
+    ----------
+    filename : str
+        Input data. Name of file in current directory or path to file.
+    
+    Returns
+    -------
+    header : dict
+            Dictionary with header information, such as name of pulsar,
+            resolution, numbers of points in the observation, 
+            time of start of the observation and other.
+    main_pulse : ndarray
+            Array of intensities by time which is an average profile of pulsar.
+    data_pulses : ndarray
+            Array of individual pulses.
+    background : list
+            List of vedian value of noise for each individual pulse.
+    
+    Examples
+    --------
+    It will be add in future.
     """
     
     with open(filename, 'r') as file:
@@ -225,10 +426,42 @@ def read_profiles_w_skip(filename):
 
 def edgesOprofile(profile, pattern):
     """
-    edgesOprofile(profile, pattern)
-    Return left and right edges of average profile which were determed by cross-correlation
-    with pattern
+    Help on function edgesOprofile in module PRAO:
+    
+    edgesOprofile(profile, pattern):
+        return l_frame, r_frame
+    
+    Discription
+    ----------
+    The function returns left and right edges of 
+    average profile(or individual pulses) which were determed
+    by cross-correlation with pattern of average profile(or individual pulses).
+    
+    Parameters
+    ----------
+    profile : list, ndarray
+        Input data. Array of intensities by time which is an average profile of pulsar
+        or individual pulse.
+    pattern : list, ndarray
+        Input data. Array of intensities by time which is an pattern of 
+        average profile of pulsar or individual pulse.
+    
+    Returns
+    -------
+    l_frame : float
+            The left edge of average profile(or individual pulses)
+            which were determed by cross-correlation with pattern 
+            of average profile(or individual pulses).
+    r_frame : float
+            The right edge of average profile(or individual pulses)
+            which were determed by cross-correlation with pattern 
+            of average profile(or individual pulses).
+    
+    Examples
+    --------
+    It will be add in future.
     """
+    
     cor_A_B = np.correlate(profile, pattern, mode='full')
     l_frame = np.argmax(cor_A_B, axis=0) - len(pattern)
     r_frame = np.argmax(cor_A_B, axis=0)
@@ -242,7 +475,35 @@ def edgesOprofile(profile, pattern):
 # Функция определения границ по определенному уровню
 def edge_by_level(spline, level):
     """
-    edge_by_level(spline, level)
+    Help on function edge_by_level in module PRAO:
+    
+    edge_by_level(spline, level):
+        return left_arg, right_arg
+    
+    Discription
+    ----------
+    This is a support function
+    which determines borders  of spline at the certain level by gradual downhill.
+    
+    Parameters
+    ----------
+    spline : list, ndarray
+        Input data. Array of intensities by time which is an average profile of pulsar
+        or individual pulse.
+    level : int, float
+        Input data. The desired level for determing borders.
+    
+    Returns
+    -------
+    
+    left_arg : float
+            The left border of spline.
+    right_arg : float
+            The right border of spline.
+    
+    Examples
+    --------
+    It will be add in future.
     """
     max_arg_spline = np.argmax(spline)
     left_arg = None
@@ -284,11 +545,40 @@ def edge_by_level(spline, level):
 
 def width_of_pulse(pulse, level):
     """
-    width_of_pulse(pulse, level)
-    Function calculate width of profile or pulse in certain level (10%, 50% or other).
-    Width of pulses determ by spline interpolation.
-    There are problem with multicomponents average profile
+    Help on function width_of_pulse in module PRAO:
+    
+    width_of_pulse(pulse, level):
+        return w_level, left_spl, right_spl
+    
+    Discription
+    ----------
+    Function calculates width of profile or pulse 
+    in certain level (10%, 50% or other). 
+    Width of pulses is determined by spline interpolation.
+    There is problem with multicomponents average profiles.
+    
+    Parameters
+    ----------
+    pulse : list, ndarray
+        Input data. Array of intensities by time which is an average profile of pulsar
+        or individual pulse.
+    level : int, float
+        Input data. The desired level for determing borders.
+    
+    Returns
+    -------
+    w_level : float
+            The width of profile or pulse.
+    left_spl : float
+            The left border of spline.
+    right_spl : float
+            The right border of spline.
+    
+    Examples
+    --------
+    It will be add in future.
     """
+    
     inter_point = 20000
     
     point_for_pulse = range(len(pulse))
@@ -316,7 +606,45 @@ def width_of_pulse(pulse, level):
 
 def width_of_pulse_up(pulse, level, l_edge, r_edge):
     """
-    width_of_pulse_up(pulse, level, l_edge, r_edge)
+    Help on function width_of_pulse_up in module PRAO:
+    
+    width_of_pulse_up(pulse, level, l_edge, r_edge):
+        return w_level, left_arg, right_arg
+    
+    Discription
+    ----------
+    Function calculates width of profile or pulse 
+    in certain level (10%, 50% or other). 
+    Width of pulses is determined by spline interpolation.
+    The difference from width_of_pulse is that the algorithm
+    for determining the width is based on calculating the required level
+    from the boundaries of the profile. 
+    It solves the problem with multicomponents average profiles.
+    
+    Parameters
+    ----------
+    pulse : list, ndarray
+        Input data. Array of intensities by time which is an average profile of pulsar
+        or individual pulse.
+    level : int, float
+        Input data. The desired level for determing borders.
+    l_edge : int, float
+        Input data. The left border of profile.
+    r_edge : int, float
+        Input data. The right border of profile.
+        
+    Returns
+    -------
+    w_level : float
+            The width of profile or pulse.
+    left_arg : float
+            The left border of spline.
+    right_arg : float
+            The right border of spline.
+    
+    Examples
+    --------
+    It will be add in future.
     """
     inter_point = 20000
     
@@ -335,7 +663,7 @@ def width_of_pulse_up(pulse, level, l_edge, r_edge):
     
     for i in range(len(spline[left_arg:right_arg])):
         try:
-            if spline[left_arg + i] > val_level :
+            if spline[left_arg + i] > val_level:
                 left_arg = left_arg + i
                 break
             else:
@@ -371,8 +699,35 @@ def width_of_pulse_up(pulse, level, l_edge, r_edge):
 
 def SNR(array, l_edge, r_edge):
     """
-    Return signal-noise ratio which was calculated as ratio maximum of average pulse 
+    Help on function SNR in module PRAO:
+    
+    SNR(array, l_edge, r_edge):
+        return snr
+    
+    Discription
+    ----------
+    Function calculates signal-noise ratio of pulse or profile. 
+    The signal-noise ratio was calculated as ratio maximum of average pulse 
     and standart devision of noise.
+    
+    Parameters
+    ----------
+    array : list, ndarray
+        Input data. Array of intensities by time which is an average profile of pulsar
+        or individual pulse.
+    l_edge : int, float
+        Input data. The left border of profile.
+    r_edge : int, float
+        Input data. The rigth border of profile.
+        
+    Returns
+    -------
+    snr : float
+            The signal-noise ratio of pulse or profile of pulsar.
+    
+    Examples
+    --------
+    It will be add in future.
     """
     return max(array[l_edge:r_edge])/np.std(np.append(array[:l_edge], array[r_edge:]), 
                                             dtype=np.float64)
@@ -417,10 +772,4 @@ def quality_data(profile, l_edge, r_edge):
 
 def my_chi(profile, pattern):
     return sum([abs(pat - prof) for pat, prof in zip(pattern, profile)])
-
-
-# In[5]:
-
-
-
 
